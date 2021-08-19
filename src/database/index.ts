@@ -5,10 +5,9 @@ export default async (name = 'default'): Promise<Connection> => {
 
   return createConnection(
     Object.assign(defaultOptions, {
-      name,
-      database:
+      url:
         process.env.NODE_ENV === 'test'
-          ? 'gostack_desafio06_tests'
+          ? 'postgres://entpbcbt:nk53unv2jkRCF3AZTtb2ko_HEu7-Kzhw@chunee.db.elephantsql.com/entpbcbt'
           : defaultOptions.database,
     }),
   );
