@@ -26,12 +26,16 @@ class CreateTransactionService {
     });
 
     if (!categoryAlreadyExists) {
-      await categoryRepository.create({
+      const createCategory = await categoryRepository.create({
         title: category,
       });
+      await categoryRepository.save(createCategory);
     }
 
-    const findCategory = await categoryRepository.findOne({ title: category });
+    const findCategory = await categoryRepository.findOne({
+      title: category,
+    });
+
 
     const { total } = await transactionsRepository.getBalance();
 
@@ -45,6 +49,7 @@ class CreateTransactionService {
       category_id: findCategory?.id,
     });
 
+    await transactionsRepository.save(newTransaction);
     return newTransaction;
   }
 }
